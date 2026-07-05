@@ -8,6 +8,7 @@ export class Object {
     F: vec2; // 힘
     position: vec2; // 위치(좌표)
     size: number; // 지름
+    isClicked: boolean;
 
     constructor(id: number, mass: number) {
         this.id = id;
@@ -17,6 +18,7 @@ export class Object {
         this.F = [0, 0];
         this.position = [0, 0];
         this.size = 50;
+        this.isClicked = false;
     }
     /*
         calculateTime(): number {
@@ -40,13 +42,15 @@ export class Object {
         console.log(newForce, newAcceleration, newVelocity);
     }
 
-    setVelocity(newVelocity: vec2, dt: number) {
+    setPosition(newPosition: vec2, dt: number) {
+        const newVelocity: vec2 = vec2.div((vec2.sub(newPosition, this.position)), dt);
         const newAcceleration: vec2 = vec2.div((vec2.sub(newVelocity, this.v)), dt);
         const newForce: vec2 = vec2.mul(newAcceleration, this.m);
 
         this.a = newAcceleration;
         this.v = newVelocity;
         this.F = newForce;
+        this.position = newPosition;
     }
 
     getMomentum(): vec2 {
@@ -72,7 +76,9 @@ export class Object {
         const canvas = document.getElementById('canvas') as HTMLCanvasElement;
         const ctx = canvas.getContext('2d');
 
-        this.calculatePosition(dt);
+        if (isClicked !== true) {
+            this.calculatePosition(dt);
+        }
 
         //console.log(`Object ${this.id}: position = (${this.position[0]}, ${this.position[1]}), velocity = ${this.v}, acceleration = ${this.a}`);
 
