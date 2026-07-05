@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <!-- <link rel="icon" type="image/png" href="/favicon.png" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css">
+    <title>충격량 계산기</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script type="module" src="/src/First/main.ts"></script>
+
+    <canvas id="canvas"></canvas>
+
+    <div>
+        <label for="object1_m">물체1의 질량:</label>
+        <input type="number" id="object1_m" value="">
+
+        <label for="object1_v">물체1의 속도:</label>
+        <span type="number" id="object1_v" value="">
+    </div>
+
+    <div>
+        <label for="object2_I">물체2가 받은 충격량의 크기:</label>
+        <span type="number" id="object2_I" value=""> </span>
+    </div>
+
+    <div>
+        <label for="object2_m">물체2의 질량:</label>
+        <input type="number" id="object2_m" value="">
+
+        <label for="object2_v">물체2의 속도:</label>
+        <span type="number" id="object2_v" value="">
+    </div>
+
+    <button id="reset_btn">초기화</button>
+</body>
+
+</html>
