@@ -67,7 +67,7 @@ export class Object {
     calculatePosition(dt: number) {
         const d: vec2 = vec2.mul(this.v, dt); // 변위
 
-        vec2.add(this.position, d);
+        this.position = vec2.add(this.position, d);
     }
 
     animate = (dt: number) => {
