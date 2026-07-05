@@ -139,15 +139,18 @@ function canvasDragStart(event: MouseEvent) {
     }
 
     mouseEvent = event
-    animationId2 = requestAnimationFrame(canvasDragMove);
+
+    canvasDragging();
 }
 
-function canvasDragMove() {
+function canvasDragging() {
     if (isDragging) {
         const rect = canvas.getBoundingClientRect();
         const mousePosition: vec2 = [mouseEvent!.clientX - rect.left, mouseEvent!.clientY - rect.top];
 
         selectedObject!.setPosition(mousePosition, deltaTime! / 1000);
+        
+        animationId2 = requestAnimationFrame(canvasDragging);
     }
 }
 
