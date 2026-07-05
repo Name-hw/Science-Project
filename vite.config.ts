@@ -8,6 +8,7 @@ export default defineConfig({
     rolldownOptions: {
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
+        First: resolve(import.meta.dirname, 'src/First/index.html')
       },
     },
   },
