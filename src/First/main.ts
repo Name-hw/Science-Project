@@ -68,8 +68,8 @@ function calculate() {
             const distance = vec2.distance(selectedObject.position, otherObject.position);
 
             if (distance <= (selectedObject.size / 2 + otherObject.size / 2)) {
-                const selectedObject_p = selectedObject.calculateMomentum();
-                otherObject.applyImpulse(selectedObject_p);
+                const selectedObject_p = selectedObject.getMomentum();
+                otherObject.applyImpulse(selectedObject_p, deltaTime! /1000);
             }
         }
     }
