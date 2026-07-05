@@ -31,11 +31,11 @@ export class Object {
 
     setForce(newForce: vec2, dt: number) {
         const newAcceleration: vec2 = vec2.div(newForce, this.m);
-        const newVelocity: vec2 = vec2.div((vec2.sub(newPosition, this.position)), dt);
+        const newVelocity: vec2 = vec2.mul(newAcceleration, dt);
 
         this.F = newForce;
         this.a = newAcceleration;
-        this.v = vec2.add(this.v, vec2.mul(this.a, dt! / 1000));
+        this.v = newVelocity;
     }
 
     setPosition(newPosition: vec2, dt: number) {
@@ -55,7 +55,7 @@ export class Object {
         vec2.add(this.position, s);
     }
 
-    calculateMomentum(): vec2 {
+    getMomentum(): vec2 {
         const p: vec2 = vec2.mul(this.v, this.m); // 운동량
 
         return p;
@@ -64,7 +64,7 @@ export class Object {
     applyImpulse(I: vec2, dt: number) {
         const F: vec2 = vec2.div(I, dt); // 받은힘
 
-        vec2.add(this.f, dv);
+        this.setForce(F, dt);
     }
 
     animate = (dt: number) => {
