@@ -69,6 +69,7 @@ function calculate() {
 
             if (distance <= (selectedObject.size / 2 + otherObject.size / 2)) {
                 const selectedObject_p = selectedObject.getMomentum();
+                
                 otherObject.applyImpulse(selectedObject_p, deltaTime! /1000);
             }
         }
