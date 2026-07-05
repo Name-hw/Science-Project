@@ -65,8 +65,10 @@ function calculate() {
             const distance = vec2.distance(selectedObject.position, otherObject.position);
 
             if (distance <= (selectedObject.size / 2 + otherObject.size / 2)) {
-                const selectedObject_p = selectedObject.getMomentum();
+                canvasDragEnd();
                 
+                const selectedObject_p = selectedObject.getMomentum();
+
                 otherObject.applyImpulse(selectedObject_p, deltaTime! /1000);
             }
         }
@@ -128,14 +130,14 @@ function canvasDragMove(mouseEvent: MouseEvent) {
     }
 }
 
-function canvasDragEnd(mouseEvent: MouseEvent) {
+function canvasDragEnd() {
     if (isDragging) {
         // 드래그 끝났을 때 물체 계산이 안 이루어지는 문제 해결
-        const rect = canvas.getBoundingClientRect();
+        /*const rect = canvas.getBoundingClientRect();
         const mousePosition: vec2 = [mouseEvent.clientX - rect.left, mouseEvent.clientY - rect.top];
 
         selectedObject!.setPosition(mousePosition, deltaTime! / 1000);
-
+*/
         isDragging = false;
         selectedObject = null;
     }
