@@ -16,7 +16,7 @@ const resetBtn = document.getElementById('reset_btn') as HTMLButtonElement;
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d');
 
-let animationId: number | null = null;
+let animationId1: number | null = null;
 let lastTime: number | null = null; // 초 단위임
 let deltaTime: number | null = null; // 초 단위임
 
@@ -24,6 +24,8 @@ let objects: Array<Object> = [];
 let selectedObject: Object | null = null;
 let impulse: vec2 = [0,0];
 
+let animationId2: number | null = null;
+let mouseEvent: MouseEvent | null = null;
 let isDragging: boolean = false;
 
 //
@@ -58,7 +60,7 @@ function mainLoop() {
     animate(performance.now());
     updateUI();
 
-    animationId = requestAnimationFrame(mainLoop);
+    animationId1 = requestAnimationFrame(mainLoop);
 }
 
 // 2-1. 계산
@@ -77,6 +79,8 @@ function calculate() {
                 otherObject.applyImpulse(selectedObject_p, deltaTime! / 1000);
 
                 impulse = selectedObject_p;
+
+                break
             }
         }
     }
@@ -118,9 +122,9 @@ function vec2ToFixed(v: vec2): string {
 }
 
 // 2-4. 이벤트 처리
-function canvasDragStart(mouseEvent: MouseEvent) {
+function canvasDragStart(event: MouseEvent) {
     const rect = canvas.getBoundingClientRect();
-    const mousePosition: vec2 = [mouseEvent.clientX - rect.left, mouseEvent.clientY - rect.top]; // 캔버스 내에서의 마우스 위치(좌표)
+    const mousePosition: vec2 = [event.clientX - rect.left, event.clientY - rect.top]; // 캔버스 내에서의 마우스 위치(좌표)
 
     for (const object of objects) {
         const distance = vec2.distance(mousePosition, object.position);
@@ -133,12 +137,15 @@ function canvasDragStart(mouseEvent: MouseEvent) {
             break;
         }
     }
+
+    mouseEvent = event
+    animationId2 = requestAnimationFrame(canvasDragMove);
 }
 
-function canvasDragMove(mouseEvent: MouseEvent) {
+function canvasDragMove() {
     if (isDragging) {
         const rect = canvas.getBoundingClientRect();
-        const mousePosition: vec2 = [mouseEvent.clientX - rect.left, mouseEvent.clientY - rect.top];
+        const mousePosition: vec2 = [mouseEvent!.clientX - rect.left, mouseEvent!.clientY - rect.top];
 
         selectedObject!.setPosition(mousePosition, deltaTime! / 1000);
     }
@@ -152,13 +159,18 @@ function canvasDragEnd() {
             selectedObject.isSelected = false;
             selectedObject = null;
         }
+
+        cancelAnimationFrame(animationId2!);
     }
 }
 
 // 3. 리셋
 function reset() {
-    cancelAnimationFrame(animationId!);
-    animationId = null;
+    cancelAnimationFrame(animationId1!);
+    cancelAnimationFrame(animationId2!);
+    animationId1 = null;
+    animationId2 = null;
+    mouseEvent = null;
     lastTime = null;
     deltaTime = null;
 
@@ -171,7 +183,6 @@ function reset() {
 init();
 mainLoop();
 canvas.addEventListener('mousedown', canvasDragStart);
-canvas.addEventListener('mousemove', canvasDragMove);
 canvas.addEventListener('mouseup', canvasDragEnd);
 canvas.addEventListener('mouseleave', canvasDragEnd);
 resetBtn.addEventListener('click', reset);
