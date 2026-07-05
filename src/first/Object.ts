@@ -36,6 +36,8 @@ export class Object {
         this.F = newForce;
         this.a = newAcceleration;
         this.v = newVelocity;
+
+        console.log(newForce, newAcceleration, newVelocity);
     }
 
     setPosition(newPosition: vec2, dt: number) {
@@ -49,12 +51,6 @@ export class Object {
         this.position = newPosition;
     }
 
-    calculatePosition(dt: number) {
-        const s: vec2 = vec2.mul(this.v, dt);
-
-        vec2.add(this.position, s);
-    }
-
     getMomentum(): vec2 {
         const p: vec2 = vec2.mul(this.v, this.m); // 운동량
 
@@ -65,6 +61,12 @@ export class Object {
         const F: vec2 = vec2.div(I, dt); // 받은힘
 
         this.setForce(F, dt);
+    }
+
+    calculatePosition(dt: number) {
+        const d: vec2 = vec2.mul(this.v, dt); // 변위
+
+        vec2.add(this.position, d);
     }
 
     animate = (dt: number) => {
