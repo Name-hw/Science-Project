@@ -154,6 +154,10 @@ function canvasDragging() {
     }
 }
 
+function canvasDragMove(event: MouseEvent) {
+    mouseEvent = event
+}
+
 function canvasDragEnd() {
     if (isDragging) {
         isDragging = false;
@@ -186,6 +190,7 @@ function reset() {
 init();
 mainLoop();
 canvas.addEventListener('mousedown', canvasDragStart);
+canvas.addEventListener('mousemove', canvasDragMove);
 canvas.addEventListener('mouseup', canvasDragEnd);
 canvas.addEventListener('mouseleave', canvasDragEnd);
 resetBtn.addEventListener('click', reset);
