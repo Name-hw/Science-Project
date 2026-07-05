@@ -22,7 +22,7 @@ let deltaTime: number | null = null; // 초 단위임
 
 let objects: Array<Object> = [];
 let selectedObject: Object | null = null;
-let impulse: number = 0;
+let impulse: vec2 = [0,0];
 
 let isDragging: boolean = false;
 
@@ -104,7 +104,7 @@ function updateUI() {
     object1_p_span.textContent = vec2ToFixed(objects[0].getMomentum());
     object2_v_span.textContent = vec2ToFixed(objects[1].v);
     object2_p_span.textContent = vec2ToFixed(objects[1].getMomentum());
-    object_I_span.textContent = impulse.toFixed(2);
+    object_I_span.textContent = vec2ToFixed(impulse);
 }
 
 function vec2ToFixed(v: vec2): string {
@@ -143,9 +143,12 @@ function canvasDragMove(mouseEvent: MouseEvent) {
 
 function canvasDragEnd() {
     if (isDragging) {
-        selectedObject.isSelected = false;
         isDragging = false;
-        selectedObject! = null;
+
+        if (selectedObject) {
+            selectedObject.isSelected = false;
+            selectedObject = null;
+        }
     }
 }
 
