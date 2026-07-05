@@ -19,7 +19,6 @@ let deltaTime: number | null = null; // 초 단위임
 let objects: Array<Object> = [];
 let selectedObject: Object | null = null;
 
-let mousePosition: vec2 | null= null;
 let isDragging: boolean = false;
 
 //
@@ -116,6 +115,7 @@ function canvasDragStart(mouseEvent: MouseEvent) {
         if (distance <= (object.size / 2)) {
             isDragging = true;
             selectedObject = object;
+            selectedObject.isClicked = true;
 
             break;
         }
@@ -123,22 +123,17 @@ function canvasDragStart(mouseEvent: MouseEvent) {
 }
 
 function canvasDragMove(mouseEvent: MouseEvent) {
-    if (isDragging && deltaTime! > 0) {
+    if (isDragging) {
         const rect = canvas.getBoundingClientRect();
-        const currentMousePosition: vec2 = [mouseEvent.clientX - rect.left, mouseEvent.clientY - rect.top];
+        const mousePosition: vec2 = [mouseEvent.clientX - rect.left, mouseEvent.clientY - rect.top];
 
-        if (mousePosition) {
-            const mouseVelocity: vec2 = vec2.div(vec2.sub(currentMousePosition, mousePosition), deltaTime!/1000);
-
-            selectedObject!.setVelocity(mouseVelocity, deltaTime! / 1000);
-        }
-
-        mousePosition = currentMousePosition;
+        selectedObject!.setPosition(mousePosition, deltaTime! / 1000);
     }
 }
 
 function canvasDragEnd() {
     if (isDragging) {
+        selectedObject.isClicked = false;
         isDragging = false;
         mousePosition = null;
         selectedObject = null;
