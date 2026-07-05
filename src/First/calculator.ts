@@ -1,4 +1,4 @@
-import { Object } from './Object';
+//import { Object } from './Object';
 
 /*
 export function calculateGravity(r: number, m1: number, m2: number): number {
@@ -8,8 +8,3 @@ export function calculateGravity(r: number, m1: number, m2: number): number {
     return Gravity;
 }
 */
-
-export function calculateImpulse(object1: Object, object2: Object): [number, number] {
-    const v
-    return v;
-}
