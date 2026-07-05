@@ -132,6 +132,7 @@ function canvasDragMove(mouseEvent: MouseEvent) {
 
             selectedObject!.setVelocity(mouseVelocity, deltaTime! / 1000);
         }
+        
 
         mousePosition = currentMousePosition;
     }
