@@ -71,24 +71,11 @@ function calculate() {
         canvasDragEnd();
 
         const object1_p: vec2 = objects[0].getMomentum();
-        const object2_p: vec2 = objects[1].getMomentum();
+        
+        impulse = object1_p;
 
-        if (objects[0].m < objects[1].m) {
-            impulse = object2_p;
-
-            objects[0].applyImpulse(impulse, deltaTime! / 1000);
-            objects[1].applyImpulse(vec2.neg(impulse), deltaTime! / 1000);
-        } else if (objects[0].m == objects[1].m) {
-            impulse = object2_p;
-
-            objects[0].applyImpulse(impulse, deltaTime! / 1000);
-            objects[1].applyImpulse(vec2.neg(impulse), deltaTime! / 1000);
-        } else if (objects[0].m > objects[1].m) {
-            impulse = object1_p;
-
-            objects[0].applyImpulse(vec2.neg(impulse), deltaTime! / 1000);
-            objects[1].applyImpulse(impulse, deltaTime! / 1000);
-        }
+        objects[0].applyImpulse(vec2.neg(impulse), deltaTime! / 1000);
+        objects[1].applyImpulse(impulse, deltaTime! / 1000);
     }
 }
 
