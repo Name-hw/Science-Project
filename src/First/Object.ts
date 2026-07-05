@@ -1,4 +1,4 @@
-import { scalar, vec2 } from 'linearly'
+import { vec2 } from 'linearly'
 
 export class Object {
     id: number;
