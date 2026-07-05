@@ -60,6 +60,7 @@ export class Object {
     applyImpulse(I: vec2, dt: number) {
         const F: vec2 = vec2.div(I, dt); // 받은힘
 
+        console.log(F);
         this.setForce(F, dt);
     }
 
