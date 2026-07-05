@@ -100,10 +100,13 @@ function animate(timestamp: number) {
 
 // 2-3. UI 업데이트
 function updateUI() {
+    const object1_p = objects[0].getMomentum();
+    const object2_p = objects[1].getMomentum();
+
     object1_v_span.textContent = vec2ToFixed(objects[0].v);
-    object1_p_span.textContent = vec2ToFixed(objects[0].getMomentum());
+    object1_p_span.textContent = vec2ToFixed(object1_p);
     object2_v_span.textContent = vec2ToFixed(objects[1].v);
-    object2_p_span.textContent = vec2ToFixed(objects[1].getMomentum());
+    object2_p_span.textContent = vec2ToFixed(object2_p);
     object_I_span.textContent = vec2ToFixed(impulse);
 }
 
