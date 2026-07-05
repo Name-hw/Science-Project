@@ -20,27 +20,6 @@ export class Object {
         this.size = 50;
         this.isSelected = false;
     }
-    /*
-        calculateTime(): number {
-            const currentTime: Date = new Date();
-            const deltaTime = (currentTime.getTime() - this.t.getTime()) / 1000;
-    
-            this.t.setTime(currentTime.getTime());
-    
-            return deltaTime;
-        }
-    */
-
-    setForce(newForce: vec2, dt: number) {
-        const newAcceleration: vec2 = vec2.div(newForce, this.m);
-        const newVelocity: vec2 = vec2.mul(newAcceleration, dt);
-
-        this.F = newForce;
-        this.a = newAcceleration;
-        this.v = newVelocity;
-
-        console.log(newForce, newAcceleration, newVelocity);
-    }
 
     setPosition(newPosition: vec2, dt: number) {
         const newVelocity: vec2 = vec2.div((vec2.sub(newPosition, this.position)), dt);
@@ -59,11 +38,20 @@ export class Object {
         return p;
     }
 
-    applyImpulse(I: vec2, dt: number) {
-        const F: vec2 = vec2.div(I, dt); // 받은힘
+    applyForce(F: vec2, dt: number) {
+        const newForce = vec2.add(this.F, F);
+        const newAcceleration: vec2 = vec2.div(newForce, this.m);
+        const newVelocity: vec2 = vec2.mul(newAcceleration, dt);
 
-        console.log(F);
-        this.setForce(F, dt);
+        this.F = newForce;
+        this.a = newAcceleration;
+        this.v = newVelocity;
+    }
+
+    applyImpulse(I: vec2, dt: number) {
+        const F: vec2 = vec2.div(I, dt); // 받은 힘
+
+        this.applyForce(F, dt);
     }
 
     calculatePosition(dt: number) {

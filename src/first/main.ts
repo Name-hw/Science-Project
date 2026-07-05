@@ -65,24 +65,24 @@ function mainLoop() {
 
 // 2-1. 계산
 function calculate() {
-    if (selectedObject) {
-        const otherObjects = objects.filter(obj => obj !== selectedObject);
+    const distance = vec2.distance(objects[0].position, objects[1].position);
 
-        for (let otherObject of otherObjects) {
-            const distance = vec2.distance(selectedObject.position, otherObject.position);
+    if (distance <= (objects[0].size / 2 + objects[1].size / 2)) {
+        canvasDragEnd();
 
-            if (distance <= (selectedObject.size / 2 + otherObject.size / 2)) {
-                canvasDragEnd();
+        const object1_p: vec2 = objects[0].getMomentum();
+        const object2_p: vec2 = objects[1].getMomentum();
 
-                const selectedObject_p: vec2 = selectedObject.getMomentum();
-
-                otherObject.applyImpulse(selectedObject_p, deltaTime! / 1000);
-
-                impulse = selectedObject_p;
-
-                break
-            }
+        if (objects[0].m < objects[1].m) {
+            impulse = object2_p;
+        } else if (objects[0].m == objects[1].m) {
+            impulse = object2_p;
+        } else if (objects[0].m > objects[1].m) {
+            impulse = object1_p;
         }
+
+        objects[0].applyImpulse(impulse, deltaTime! / 1000);
+        objects[1].applyImpulse(impulse, deltaTime! / 1000);
     }
 }
 
