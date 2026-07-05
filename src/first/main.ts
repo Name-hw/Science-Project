@@ -128,7 +128,7 @@ function canvasDragMove(mouseEvent: MouseEvent) {
         const currentMousePosition: vec2 = [mouseEvent.clientX - rect.left, mouseEvent.clientY - rect.top];
 
         if (mousePosition) {
-            const mouseVelocity: vec2 = vec2.sub(currentMousePosition, mousePosition);
+            const mouseVelocity: vec2 = vec2.div(vec2.sub(currentMousePosition, mousePosition), deltaTime!);
 
             selectedObject!.setVelocity(mouseVelocity, deltaTime! / 1000);
         }
