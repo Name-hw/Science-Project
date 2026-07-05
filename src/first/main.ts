@@ -123,7 +123,7 @@ function canvasDragStart(mouseEvent: MouseEvent) {
 }
 
 function canvasDragMove(mouseEvent: MouseEvent) {
-    if (isDragging) {
+    if (isDragging && deltaTime! > 0) {
         const rect = canvas.getBoundingClientRect();
         const currentMousePosition: vec2 = [mouseEvent.clientX - rect.left, mouseEvent.clientY - rect.top];
 
@@ -132,7 +132,7 @@ function canvasDragMove(mouseEvent: MouseEvent) {
 
             selectedObject!.setVelocity(mouseVelocity, deltaTime! / 1000);
         }
-        
+
 
         mousePosition = currentMousePosition;
     }
