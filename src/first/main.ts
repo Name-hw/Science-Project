@@ -91,8 +91,12 @@ function animate(timestamp: number) {
 
 // 2-3. UI 업데이트
 function updateUI() {
-    object1_v_span.textContent = `(${objects[0].v[0].toFixed(2)}, ${objects[0].v[1].toFixed(2)})`;
-    object2_v_span.textContent = `(${objects[1].v[0].toFixed(2)}, ${objects[1].v[1].toFixed(2)})`;
+    // 단위 변환
+    let object1_v = vec2.mul(objects[0].v, 60);
+    let object2_v = vec2.mul(objects[1].v, 60);
+
+    object1_v_span.textContent = `(${object1_v[0].toFixed(2)}, ${object1_v[1].toFixed(2)})`;
+    object2_v_span.textContent = `(${object2_v[0].toFixed(2)}, ${object2_v[1].toFixed(2)})`;
 }
 
 // 2-4. 이벤트 처리
