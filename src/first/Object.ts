@@ -40,15 +40,13 @@ export class Object {
         console.log(newForce, newAcceleration, newVelocity);
     }
 
-    setPosition(newPosition: vec2, dt: number) {
-        const newVelocity: vec2 = vec2.div((vec2.sub(newPosition, this.position)), dt);
+    setVelocity(newVelocity: vec2, dt: number) {
         const newAcceleration: vec2 = vec2.div((vec2.sub(newVelocity, this.v)), dt);
         const newForce: vec2 = vec2.mul(newAcceleration, this.m);
 
         this.a = newAcceleration;
         this.v = newVelocity;
         this.F = newForce;
-        this.position = newPosition;
     }
 
     getMomentum(): vec2 {
