@@ -77,16 +77,16 @@ function calculate() {
             impulse = object2_p;
 
             objects[0].applyImpulse(impulse, deltaTime! / 1000);
-            objects[1].applyImpulse(vec2.inv(impulse), deltaTime! / 1000);
+            objects[1].applyImpulse(vec2.neg(impulse), deltaTime! / 1000);
         } else if (objects[0].m == objects[1].m) {
             impulse = object2_p;
 
             objects[0].applyImpulse(impulse, deltaTime! / 1000);
-            objects[1].applyImpulse(vec2.inv(impulse), deltaTime! / 1000);
+            objects[1].applyImpulse(vec2.neg(impulse), deltaTime! / 1000);
         } else if (objects[0].m > objects[1].m) {
             impulse = object1_p;
 
-            objects[0].applyImpulse(vec2.inv(impulse), deltaTime! / 1000);
+            objects[0].applyImpulse(vec2.neg(impulse), deltaTime! / 1000);
             objects[1].applyImpulse(impulse, deltaTime! / 1000);
         }
     }
