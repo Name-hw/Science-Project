@@ -55,7 +55,7 @@ export class Object {
 
     getMomentum(): vec2 {
         const p: vec2 = vec2.mul(this.v, this.m); // 운동량
-        console.log(this.v, this.m);
+        
         return p;
     }
 
