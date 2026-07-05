@@ -103,6 +103,8 @@ function updateUI() {
     const object1_p = objects[0].getMomentum();
     const object2_p = objects[1].getMomentum();
 
+    console.log(object1_p, object2_p);
+
     object1_v_span.textContent = vec2ToFixed(objects[0].v);
     object1_p_span.textContent = vec2ToFixed(object1_p);
     object2_v_span.textContent = vec2ToFixed(objects[1].v);
