@@ -19,7 +19,7 @@ let deltaTime: number | null = null; // 초 단위임
 let objects: Array<Object> = [];
 let selectedObject: Object | null = null;
 
-let mousePosition: vec2;
+let mousePosition: vec2 | null= null;
 let isDragging: boolean = false;
 
 //
@@ -139,13 +139,8 @@ function canvasDragMove(mouseEvent: MouseEvent) {
 
 function canvasDragEnd() {
     if (isDragging) {
-        // 드래그 끝났을 때 물체 계산이 안 이루어지는 문제 해결
-        /*const rect = canvas.getBoundingClientRect();
-        const mousePosition: vec2 = [mouseEvent.clientX - rect.left, mouseEvent.clientY - rect.top];
-
-        selectedObject!.setPosition(mousePosition, deltaTime! / 1000);
-*/
         isDragging = false;
+        mousePosition = null;
         selectedObject = null;
     }
 }
