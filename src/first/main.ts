@@ -34,19 +34,16 @@ function init() {
     canvas.height = window.innerHeight / 2;
 
     createObject();
-
-    const object1_m = Number(object1_m_input.value);
-    const object2_m = Number(object2_m_input.value);
-
-    objects[0].m = object1_m;
-    objects[1].m = object2_m;
 }
 
 function createObject() {
-    objects[0] = new Object(1, 1);
+    const object1_m = Number(object1_m_input.value);
+    const object2_m = Number(object2_m_input.value);
+
+    objects[0] = new Object(1, object1_m);
     objects[0].position = [50, 100];
 
-    objects[1] = new Object(2, 1);
+    objects[1] = new Object(2, object2_m);
     objects[1].position = [400, 100];
 }
 
