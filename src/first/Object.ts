@@ -8,7 +8,7 @@ export class Object {
     F: vec2; // 힘
     position: vec2; // 위치(좌표)
     size: number; // 지름
-    isClicked: boolean;
+    isSelected: boolean;
 
     constructor(id: number, mass: number) {
         this.id = id;
@@ -18,7 +18,7 @@ export class Object {
         this.F = [0, 0];
         this.position = [0, 0];
         this.size = 50;
-        this.isClicked = false;
+        this.isSelected = false;
     }
     /*
         calculateTime(): number {
@@ -76,7 +76,7 @@ export class Object {
         const canvas = document.getElementById('canvas') as HTMLCanvasElement;
         const ctx = canvas.getContext('2d');
 
-        if (isClicked !== true) {
+        if (this.isSelected !== true) {
             this.calculatePosition(dt);
         }
 

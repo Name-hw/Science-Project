@@ -3,9 +3,11 @@ import { Object } from './Object.ts';
 
 const object1_m_input = document.getElementById('object1_m') as HTMLInputElement;
 const object1_v_span = document.getElementById('object1_v') as HTMLInputElement;
+const object1_p_span = document.getElementById('object1_p') as HTMLInputElement;
 
 const object2_m_input = document.getElementById('object2_m') as HTMLInputElement;
 const object2_v_span = document.getElementById('object2_v') as HTMLSpanElement;
+const object2_p_span = document.getElementById('object2_p') as HTMLInputElement;
 
 const resetBtn = document.getElementById('reset_btn') as HTMLButtonElement;
 
@@ -94,7 +96,9 @@ function animate(timestamp: number) {
 // 2-3. UI 업데이트
 function updateUI() {
     object1_v_span.textContent = vec2ToFixed(objects[0].v);
+    object1_p_span.textContent = vec2ToFixed(objects[0].getMomentum());
     object2_v_span.textContent = vec2ToFixed(objects[1].v);
+    object2_p_span.textContent = vec2ToFixed(objects[1].getMomentum());
 }
 
 function vec2ToFixed(v: vec2): string {
@@ -115,7 +119,7 @@ function canvasDragStart(mouseEvent: MouseEvent) {
         if (distance <= (object.size / 2)) {
             isDragging = true;
             selectedObject = object;
-            selectedObject.isClicked = true;
+            selectedObject.isSelected = true;
 
             break;
         }
@@ -133,9 +137,8 @@ function canvasDragMove(mouseEvent: MouseEvent) {
 
 function canvasDragEnd() {
     if (isDragging) {
-        selectedObject.isClicked = false;
+        selectedObject.isSelected = false;
         isDragging = false;
-        mousePosition = null;
         selectedObject = null;
     }
 }
