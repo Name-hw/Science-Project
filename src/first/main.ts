@@ -9,6 +9,8 @@ const object2_m_input = document.getElementById('object2_m') as HTMLInputElement
 const object2_v_span = document.getElementById('object2_v') as HTMLSpanElement;
 const object2_p_span = document.getElementById('object2_p') as HTMLInputElement;
 
+const object_I_span = document.getElementById('object_I') as HTMLInputElement;
+
 const resetBtn = document.getElementById('reset_btn') as HTMLButtonElement;
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
@@ -20,6 +22,7 @@ let deltaTime: number | null = null; // 초 단위임
 
 let objects: Array<Object> = [];
 let selectedObject: Object | null = null;
+let impulse: number = 0;
 
 let isDragging: boolean = false;
 
@@ -71,7 +74,9 @@ function calculate() {
 
                 const selectedObject_p: vec2 = selectedObject.getMomentum();
 
-                otherObject.applyImpulse(selectedObject_p, deltaTime! /1000);
+                otherObject.applyImpulse(selectedObject_p, deltaTime! / 1000);
+
+                impulse = selectedObject_p;
             }
         }
     }
@@ -99,6 +104,7 @@ function updateUI() {
     object1_p_span.textContent = vec2ToFixed(objects[0].getMomentum());
     object2_v_span.textContent = vec2ToFixed(objects[1].v);
     object2_p_span.textContent = vec2ToFixed(objects[1].getMomentum());
+    object_I_span.textContent = impulse.toFixed(2);
 }
 
 function vec2ToFixed(v: vec2): string {
@@ -139,7 +145,7 @@ function canvasDragEnd() {
     if (isDragging) {
         selectedObject.isSelected = false;
         isDragging = false;
-        selectedObject = null;
+        selectedObject! = null;
     }
 }
 
