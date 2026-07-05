@@ -38,7 +38,7 @@ let isDragging: boolean = false;
 // 1. 초기화
 function init() {
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight / 2;
+    canvas.height = window.innerHeight * (3/4);
 
     createObject();
 }
@@ -74,7 +74,7 @@ function calculate() {
         
         impulse = object1_p;
 
-        objects[0].applyImpulse(vec2.neg(impulse), deltaTime! / 1000);
+        objects[0].stop();
         objects[1].applyImpulse(impulse, deltaTime! / 1000);
     }
 }

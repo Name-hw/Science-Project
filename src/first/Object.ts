@@ -60,6 +60,12 @@ export class Object {
         this.position = vec2.add(this.position, d);
     }
 
+    stop() {
+        this.v = [0, 0];
+        this.a = [0, 0];
+        this.F = [0, 0];
+    }
+
     animate = (dt: number) => {
         const canvas = document.getElementById('canvas') as HTMLCanvasElement;
         const ctx = canvas.getContext('2d');
