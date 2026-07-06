@@ -21,27 +21,27 @@ export class Object {
         this.isSelected = false;
     }
 
-    setPosition(newPosition: vec2, dt: number) {
+    getMomentum(): vec2 {
+        const p: vec2 = vec2.mul(this.v, this.m); // 운동량
+
+        return p;
+    }
+
+    applyPosition(newPosition: vec2, dt: number) {
         const newVelocity: vec2 = vec2.div((vec2.sub(newPosition, this.position)), dt);
         const newAcceleration: vec2 = vec2.div((vec2.sub(newVelocity, this.v)), dt);
         const newForce: vec2 = vec2.mul(newAcceleration, this.m);
 
-        this.a = newAcceleration;
         this.v = newVelocity;
+        this.a = newAcceleration;
         this.F = newForce;
         this.position = newPosition;
     }
 
-    getMomentum(): vec2 {
-        const p: vec2 = vec2.mul(this.v, this.m); // 운동량
-        
-        return p;
-    }
-
     applyForce(F: vec2, dt: number) {
         const newForce = vec2.add(this.F, F);
-        const newAcceleration: vec2 = vec2.div(newForce, this.m);
-        const newVelocity: vec2 = vec2.mul(newAcceleration, dt);
+        const newAcceleration: vec2 = vec2.add(this.a, vec2.div(newForce, this.m));
+        const newVelocity: vec2 = vec2.add(this.v, vec2.mul(newAcceleration, dt));
 
         this.F = newForce;
         this.a = newAcceleration;
@@ -55,9 +55,16 @@ export class Object {
     }
 
     calculatePosition(dt: number) {
-        const d: vec2 = vec2.mul(this.v, dt); // 변위
+        if (this.isSelected !== true) {
+            const d: vec2 = vec2.mul(this.v, dt); // 변위
 
-        this.position = vec2.add(this.position, d);
+            this.position = vec2.add(this.position, d);
+        }
+    }
+
+    initForce() {
+        this.a = [0, 0];
+        this.F = [0, 0];
     }
 
     stop() {
@@ -69,10 +76,6 @@ export class Object {
     animate = (dt: number) => {
         const canvas = document.getElementById('canvas') as HTMLCanvasElement;
         const ctx = canvas.getContext('2d');
-
-        if (this.isSelected !== true) {
-            this.calculatePosition(dt);
-        }
 
         //console.log(`Object ${this.id}: position = (${this.position[0]}, ${this.position[1]}), velocity = ${this.v}, acceleration = ${this.a}`);
 

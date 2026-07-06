@@ -22,7 +22,8 @@ let deltaTime: number | null = null; // 초 단위임
 
 let objects: Array<Object> = [];
 let selectedObject: Object | null = null;
-let impulse: vec2 = [0,0];
+let impulse: vec2 = [0, 0];
+let isColliding: boolean = false;
 
 let animationId2: number | null = null;
 let pointerEvent: PointerEvent | null = null;
@@ -38,7 +39,7 @@ let isDragging: boolean = false;
 // 1. 초기화
 function init() {
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight * (3/4);
+    canvas.height = window.innerHeight * (3 / 4);
 
     createObject();
 }
@@ -65,18 +66,40 @@ function mainLoop() {
 
 // 2-1. 계산
 function calculate() {
+    // 합력 초기화
+    objects[0].initForce();
+    objects[1].initForce();
+
+    // 선택된 물체 계산
+    if (isDragging) {
+        const rect = canvas.getBoundingClientRect();
+        const mousePosition: vec2 = [pointerEvent!.clientX - rect.left, pointerEvent!.clientY - rect.top];
+
+        selectedObject!.applyPosition(mousePosition, deltaTime! / 1000);
+    }
+
+    // 충돌 처리
     const distance = vec2.distance(objects[0].position, objects[1].position);
 
-    if (distance <= (objects[0].size / 2 + objects[1].size / 2)) {
+    if (!isColliding && distance <= (objects[0].size / 2 + objects[1].size / 2)) {
         canvasDragEnd();
 
         const object1_p: vec2 = objects[0].getMomentum();
-        
-        impulse = object1_p;
+        const object2_p: vec2 = objects[1].getMomentum();
+
+        impulse = vec2.sub(object1_p, object2_p);
 
         objects[0].stop();
         objects[1].applyImpulse(impulse, deltaTime! / 1000);
+
+        isColliding = true;
+    } else if (isColliding && distance > (objects[0].size / 2 + objects[1].size / 2)) {
+        isColliding = false;
     }
+
+    // 위치 계산
+    objects[0].calculatePosition(deltaTime! / 1000);
+    objects[1].calculatePosition(deltaTime! / 1000);
 }
 
 // 2-2. 애니메이션
@@ -132,19 +155,6 @@ function canvasDragStart(event: PointerEvent) {
     }
 
     pointerEvent = event
-
-    canvasDragging();
-}
-
-function canvasDragging() {
-    if (isDragging) {
-        const rect = canvas.getBoundingClientRect();
-        const mousePosition: vec2 = [pointerEvent!.clientX - rect.left, pointerEvent!.clientY - rect.top];
-
-        selectedObject!.setPosition(mousePosition, deltaTime! / 1000);
-        
-        animationId2 = requestAnimationFrame(canvasDragging);
-    }
 }
 
 function canvasDragMove(event: PointerEvent) {
