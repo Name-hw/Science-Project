@@ -1,3 +1,7 @@
+body {
+  color: #000000;
+}
+
 canvas {
   touch-action: none;
 }
