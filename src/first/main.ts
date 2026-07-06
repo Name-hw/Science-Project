@@ -139,7 +139,7 @@ function canvasDragStart(event: PointerEvent) {
 function canvasDragging() {
     if (isDragging) {
         const rect = canvas.getBoundingClientRect();
-        const mousePosition: vec2 = [mouseEvent!.clientX - rect.left, mouseEvent!.clientY - rect.top];
+        const mousePosition: vec2 = [pointerEvent!.clientX - rect.left, pointerEvent!.clientY - rect.top];
 
         selectedObject!.setPosition(mousePosition, deltaTime! / 1000);
         
