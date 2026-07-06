@@ -25,7 +25,7 @@ let selectedObject: Object | null = null;
 let impulse: vec2 = [0,0];
 
 let animationId2: number | null = null;
-let mouseEvent: MouseEvent | null = null;
+let pointerEvent: PointerEvent | null = null;
 let isDragging: boolean = false;
 
 //
@@ -115,7 +115,7 @@ function vec2ToFixed(v: vec2): string {
 }
 
 // 2-4. 이벤트 처리
-function canvasDragStart(event: MouseEvent) {
+function canvasDragStart(event: PointerEvent) {
     const rect = canvas.getBoundingClientRect();
     const mousePosition: vec2 = [event.clientX - rect.left, event.clientY - rect.top]; // 캔버스 내에서의 마우스 위치(좌표)
 
@@ -131,7 +131,7 @@ function canvasDragStart(event: MouseEvent) {
         }
     }
 
-    mouseEvent = event
+    pointerEvent = event
 
     canvasDragging();
 }
@@ -147,8 +147,8 @@ function canvasDragging() {
     }
 }
 
-function canvasDragMove(event: MouseEvent) {
-    mouseEvent = event
+function canvasDragMove(event: PointerEvent) {
+    pointerEvent = event
 }
 
 function canvasDragEnd() {
@@ -170,7 +170,7 @@ function reset() {
     cancelAnimationFrame(animationId2!);
     animationId1 = null;
     animationId2 = null;
-    mouseEvent = null;
+    pointerEvent = null;
     lastTime = null;
     deltaTime = null;
 
@@ -182,8 +182,8 @@ function reset() {
 
 init();
 mainLoop();
-canvas.addEventListener('mousedown', canvasDragStart);
-canvas.addEventListener('mousemove', canvasDragMove);
-canvas.addEventListener('mouseup', canvasDragEnd);
-canvas.addEventListener('mouseleave', canvasDragEnd);
+canvas.addEventListener('pointerdown', canvasDragStart);
+canvas.addEventListener('pointermove', canvasDragMove);
+canvas.addEventListener('pointerup', canvasDragEnd);
+canvas.addEventListener('pointerleave', canvasDragEnd);
 resetBtn.addEventListener('click', reset);
