@@ -87,6 +87,12 @@ export class Object {
             ctx.fillStyle = "white";
             ctx.fill();
             ctx.closePath();
+
+            ctx.font = "bold 15pt '맑은 고딕'";
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+            ctx.fillStyle = "black";
+            ctx.fillText(this.id.toString(), this.position[0], this.position[1], 10);
         }
     }
 }
