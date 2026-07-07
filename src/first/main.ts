@@ -25,7 +25,6 @@ let selectedObject: Object | null = null;
 let impulse: vec2 = [0, 0];
 let isColliding: boolean = false;
 
-let animationId2: number | null = null;
 let pointerEvent: PointerEvent | null = null;
 let isDragging: boolean = false;
 
@@ -73,9 +72,9 @@ function calculate() {
     // 선택된 물체 계산
     if (isDragging) {
         const rect = canvas.getBoundingClientRect();
-        const mousePosition: vec2 = [pointerEvent!.clientX - rect.left, pointerEvent!.clientY - rect.top];
+        const pointerPosition: vec2 = [pointerEvent!.clientX - rect.left, pointerEvent!.clientY - rect.top];
 
-        selectedObject!.applyPosition(mousePosition, deltaTime! / 1000);
+        selectedObject!.applyPosition(pointerPosition, deltaTime! / 1000);
     }
 
     // 충돌 처리
@@ -111,8 +110,8 @@ function animate(timestamp: number) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        objects[0].animate(deltaTime / 1000);
-        objects[1].animate(deltaTime / 1000);
+        objects[0].animate();
+        objects[1].animate();
     }
 
     lastTime = timestamp;
@@ -140,10 +139,10 @@ function vec2ToFixed(v: vec2): string {
 // 2-4. 이벤트 처리
 function canvasDragStart(event: PointerEvent) {
     const rect = canvas.getBoundingClientRect();
-    const mousePosition: vec2 = [event.clientX - rect.left, event.clientY - rect.top]; // 캔버스 내에서의 마우스 위치(좌표)
+    const pointerPosition: vec2 = [event.clientX - rect.left, event.clientY - rect.top]; // 캔버스 내에서의 포인터 위치(좌표)
 
     for (const object of objects) {
-        const distance = vec2.distance(mousePosition, object.position);
+        const distance = vec2.distance(pointerPosition, object.position);
 
         if (distance <= (object.size / 2)) {
             isDragging = true;
@@ -169,17 +168,13 @@ function canvasDragEnd() {
             selectedObject.isSelected = false;
             selectedObject = null;
         }
-
-        cancelAnimationFrame(animationId2!);
     }
 }
 
 // 3. 리셋
 function reset() {
     cancelAnimationFrame(animationId1!);
-    cancelAnimationFrame(animationId2!);
     animationId1 = null;
-    animationId2 = null;
     pointerEvent = null;
     lastTime = null;
     deltaTime = null;

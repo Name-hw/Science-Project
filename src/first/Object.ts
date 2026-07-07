@@ -73,7 +73,7 @@ export class Object {
         this.F = [0, 0];
     }
 
-    animate = (dt: number) => {
+    animate = () => {
         const canvas = document.getElementById('canvas') as HTMLCanvasElement;
         const ctx = canvas.getContext('2d');
 
