@@ -26,6 +26,9 @@ export class Bond extends DrawingContext {
         if (this.sharedElectronPairCount == 0) {
             this.atomA.bonds[this.direction] = null;
             this.atomB.bonds[invertDirection(this.direction)] = null;
+        } else {
+            this.atomA.bonds[this.direction] = this;
+            this.atomB.bonds[invertDirection(this.direction)] = this;
         }
     }
 
