@@ -88,13 +88,6 @@ export class Atom extends DrawingContext {
                 }
             }
 
-            for (const dir of emptyDirections) {
-                if (remainingElectrons > 0) {
-                    valenceElectronState[dir as Direction]++;
-                    remainingElectrons--;
-                }
-            }
-
             for (let i: Direction = 0; i < 4; i++) {
                 if (valenceElectronState[i]) {
                     const count = valenceElectronState[i];
