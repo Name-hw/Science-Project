@@ -75,7 +75,9 @@ export class Atom extends DrawingContext {
 
             const emptyDirections = [0, 1, 2, 3].filter(dir => !this.hasBond(dir) && !this.bonds[dir as Direction]);
 
-            for (const dir of emptyDirections) {
+            for (let i = 0; i < emptyDirections.length * 2; i++) {
+                const dir = emptyDirections[Math.floor(i/2)];
+
                 if (remainingElectrons > 0) {
                     valenceElectronState[dir as Direction]++;
                     remainingElectrons--;
