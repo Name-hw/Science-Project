@@ -51,8 +51,12 @@ export class Atom extends DrawingContext {
 
             if (bond) {
                 hasBond = bond.getDirection(this) == dir;
+
+                break
             }
         }
+
+        hasBond = (hasBond || this.bonds[dir as Direction])as boolean;
 
         return hasBond;
     }
@@ -73,7 +77,7 @@ export class Atom extends DrawingContext {
             const valenceElectronState: ValenceElectronState = [0, 0, 0, 0];
             let remainingElectrons = this.getUnsharedElectronCount();
 
-            const emptyDirections = [0, 1, 2, 3].filter(dir => !this.hasBond(dir) && !this.bonds[dir as Direction]);
+            const emptyDirections = [0, 1, 2, 3].filter(dir => !this.hasBond(dir));
 
             for (let i = 0; i < emptyDirections.length * 2; i++) {
                 const dir = emptyDirections[Math.floor(i/2)];
