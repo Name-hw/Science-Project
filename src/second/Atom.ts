@@ -28,7 +28,7 @@ export class Atom extends DrawingContext {
             const bond = this.bonds[i as Direction];
 
             if (bond) {
-                unsharedElectronCount -= bond.sharedElectronPairCount;
+                unsharedElectronCount -= bond.sharedElectronPairCount*2;
             }
         }
 
@@ -79,11 +79,11 @@ export class Atom extends DrawingContext {
 
             const emptyDirections = [0, 1, 2, 3].filter(dir => !this.hasBond(dir));
 
-            for (let i = 0; i < emptyDirections.length * 2; i++) {
-                const dir = emptyDirections[Math.floor(i/2)];
-
+            for (let i = 0; i < 8; i++) {
                 if (remainingElectrons > 0) {
-                    valenceElectronState[dir as Direction]++;
+                    const emptyDirection: Direction = emptyDirections[Math.floor(i/2)];
+
+                    valenceElectronState[emptyDirection]++;
                     remainingElectrons--;
                 }
             }
